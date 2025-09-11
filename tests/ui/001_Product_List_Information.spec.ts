@@ -1,11 +1,11 @@
 import { test } from '../../fixtures/customFixtures';
-import { ProductInformation } from '../../interfaces/IProductInformation';
+import { IProductInformation } from  '../../interfaces/ui/IProductInformation';
 
 test.describe('DemoBlaze Tests - Product List Information tests', () => {
-    let firstPageProductInformation: ProductInformation[] = [];
-    let secondPageProductInformation: ProductInformation[] = [];
+    let firstPageProductInformation: IProductInformation[] = [];
+    let secondPageProductInformation: IProductInformation[] = [];
 
-    test('001 - Validate get product list information from first 2 pages', async ({ headerPage, homePage, assertions }) => {
+    test('001 - Validate get product list information from first 2 pages', async ({ headerPage, homePage, assertionsUI }) => {
         await test.step('Navigate to homepage', async () => {
             await homePage.navigateToHomePage('/');
             await homePage.waitForElementToBeVisible(headerPage.navbar);
@@ -13,7 +13,7 @@ test.describe('DemoBlaze Tests - Product List Information tests', () => {
 
         await test.step('Get product list from first page and verify it is not empty', async () => {
             const productCount = await homePage.getProductCount();
-            await assertions.isGreaterThan(Number(productCount), 0);
+            await assertionsUI.isGreaterThan(Number(productCount), 0);
         });
 
         await test.step('Get product titles, price and links from first page', async () => {
@@ -25,7 +25,7 @@ test.describe('DemoBlaze Tests - Product List Information tests', () => {
             await homePage.waitForElementToBeHidden(homePage.nextPageButton);
 
             const productCount2 = await homePage.getProductCount();
-            await assertions.isGreaterThan(Number(productCount2), 0);
+            await assertionsUI.isGreaterThan(Number(productCount2), 0);
         });
 
         await test.step('Get product titles, prices and links from second page', async () => {
@@ -34,7 +34,7 @@ test.describe('DemoBlaze Tests - Product List Information tests', () => {
 
         await test.step('Create and store product information for all products', async () => {
             const allProductsInfo = [...firstPageProductInformation, ...secondPageProductInformation];
-            await assertions.isTruthy(homePage.writeJSONFile('test-results/productsInformation.json', allProductsInfo));
+            await assertionsUI.isTruthy(homePage.writeJSONFile('test-results/productsInformation.json', allProductsInfo));
         });
     });
 });

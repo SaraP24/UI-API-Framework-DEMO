@@ -1,4 +1,4 @@
-import { ILoginCredentials } from '../interfaces/ILoginCredentials';
+import { ILoginCredentials } from '../interfaces/ui/ILoginCredentials';
 
 const loginTestData: {
     valid: ILoginCredentials[];

@@ -1,8 +1,8 @@
 import { Page, expect, Locator } from '@playwright/test';
-import { IAssertionOptions } from '../interfaces/IAssertionOptions';
-import { SHORT_TIMEOUT } from '../enums/Timeouts';
+import { IAssertionOptions } from '../../interfaces/ui/IAssertionOptions';
+import { SHORT_TIMEOUT } from '../../enums/Timeouts';
 
-export class Assertions {
+export default class AssertionsUI {
     constructor(protected page: Page) { }
 
     async elementIsVisible(element: Locator, options?: IAssertionOptions): Promise<void> {

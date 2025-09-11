@@ -1,9 +1,11 @@
 import { test as base } from "@playwright/test";
 import { HomePage } from "../page-objects/pages/HomePage";
 import { ProductPage } from "../page-objects/pages/ProductPage";
-import { Assertions } from "../helpers/Assertions";
 import { Header } from "../page-objects/pages/Header";
 import { CartPage } from "../page-objects/pages/CartPage";
+
+import  AssertionsUI  from "../helpers/ui/AssertionsUI";
+import  ApiAssertions  from "../helpers/api/ApiAssertions";
 
 type CustomFixtures = {
   homePage: HomePage;
@@ -11,7 +13,8 @@ type CustomFixtures = {
   productPage: ProductPage;
   cartPage: CartPage;
 
-  assertions: Assertions;
+  assertionsUI: AssertionsUI;
+  assertionsApi: ApiAssertions;
 }
 
 const test = base.extend<CustomFixtures>({
@@ -31,9 +34,13 @@ const test = base.extend<CustomFixtures>({
     await use(new CartPage(page));
   },
 
-  assertions: async ({ page }, use) => {
-    await use(new Assertions(page));
-  }
+  assertionsUI: async ({ page }, use) => {
+    await use(new AssertionsUI(page));
+  },
+
+  assertionsApi: async ({ request }, use) => {
+    await use( new ApiAssertions(request));
+  },
 });
 
 export { test };

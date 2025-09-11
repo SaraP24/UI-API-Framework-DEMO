@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/customFixtures';
 
-test('004 - Verify to send a message from Contact form modal', async ({ homePage, headerPage, assertions }) => {
+test('004 - Verify to send a message from Contact form modal', async ({ homePage, headerPage, assertionsUI }) => {
      await test.step('Navigate to homepage', async () => {
             await homePage.navigateToHomePage('/');
             await homePage.waitForElementToBeVisible(headerPage.navbar);
@@ -13,7 +13,7 @@ test('004 - Verify to send a message from Contact form modal', async ({ homePage
         await test.step('Verify all elements are present', async () => {
             const modalElements = await headerPage.newMessageModal.getAllModalElements();
             for (const element of modalElements) {
-                await assertions.elementIsVisible(element);
+                await assertionsUI.elementIsVisible(element);
             }
         });
 
@@ -22,11 +22,11 @@ test('004 - Verify to send a message from Contact form modal', async ({ homePage
         });
 
         await test.step('Click on Send message button', async () => {
-            await assertions.elementIsVisible(headerPage.newMessageModal.sendMessageButton);
+            await assertionsUI.elementIsVisible(headerPage.newMessageModal.sendMessageButton);
             await headerPage.newMessageModal.clickSendMessage();
         });
 
         await test.step('Verify modal is closed', async () => {
-            await assertions.elementIsHidden(headerPage.newMessageModal.contactFormIdentifier);
+            await assertionsUI.elementIsHidden(headerPage.newMessageModal.contactFormIdentifier);
         });
     });

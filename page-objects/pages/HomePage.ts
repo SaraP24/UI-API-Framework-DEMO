@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../pages/BasePage';
-import { ProductInformation } from '../../interfaces/IProductInformation';
+import { IProductInformation } from '../../interfaces/ui/IProductInformation';
 
 export class HomePage extends BasePage {
     readonly productCard: Locator = this.page.locator('.card .card-block');
@@ -43,11 +43,11 @@ export class HomePage extends BasePage {
         return hrefs.map(href => `https://www.demoblaze.com/${href}`);
     }
 
-    async getAllProductsInformation(): Promise<ProductInformation[]> {
+    async getAllProductsInformation(): Promise<IProductInformation[]> {
         const titles = await this.getProductTitles();
         const prices = await this.getProductPrices();
         const links = await this.getProductLinks();
-        const products: ProductInformation[] = titles.map((title, index) => ({
+        const products: IProductInformation[] = titles.map((title, index) => ({
             title,
             price: prices[index],
             link: links[index]

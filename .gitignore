@@ -6,3 +6,5 @@ node_modules/
 /playwright/.cache/
 /package-lock.json
 /package.json
+/availablePetsRetrieved.json
+/placedOrders.json

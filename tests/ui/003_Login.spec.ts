@@ -10,7 +10,7 @@ test.describe('DemoBlaze Tests - Login tests', () => {
         await headerPage.waitForElementToBeVisible(headerPage.loginModal.loginModalIdentifier);
     });
 
-    test('003.1 - Validate valid login', async ({ headerPage, assertions }) => {
+    test('003.1 - Validate valid login', async ({ headerPage, assertionsUI }) => {
         await test.step('Fill required credentials', async () => {
             await headerPage.loginModal.fillLoginCredentials(loginTestData.valid[0].username, loginTestData.valid[0].password);
             await headerPage.loginModal.clickLoginButton();
@@ -18,11 +18,11 @@ test.describe('DemoBlaze Tests - Login tests', () => {
 
         await test.step('Verify successful login', async () => {
             await headerPage.waitForElementToBeHidden(headerPage.loginModal.loginModalIdentifier);
-            await assertions.elementHaveText(headerPage.welcomeUserText, /welcome/i);
+            await assertionsUI.elementHaveText(headerPage.welcomeUserText, /welcome/i);
         });
     });
 
-    test('003.2 - Validate invalid login', async ({ headerPage, assertions }) => {
+    test('003.2 - Validate invalid login', async ({ headerPage, assertionsUI }) => {
         await test.step('Verify using invalid credentials for login', async () => {
             await headerPage.loginModal.fillLoginCredentials(loginTestData.invalid[0].username, loginTestData.invalid[0].password);
             await headerPage.loginModal.clickLoginButton();
@@ -30,7 +30,7 @@ test.describe('DemoBlaze Tests - Login tests', () => {
 
         await test.step('Verify login error', async () => {
             const dialogMessage = await headerPage.loginModal.getDialogMessage();
-            await assertions.isTruthy(dialogMessage.includes('Please fill out Username and Password.'));
+            await assertionsUI.isTruthy(dialogMessage.includes('Please fill out Username and Password.'));
         });
     });
 });

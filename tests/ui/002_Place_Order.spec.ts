@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/customFixtures';
 
-    test('002 - Validate user can place an order', async ({ homePage,headerPage, productPage, assertions, cartPage }) => {
+    test('002 - Validate user can place an order', async ({ homePage,headerPage, productPage, assertionsUI, cartPage }) => {
          await test.step('Navigate to homepage', async () => {
             await homePage.navigateToHomePage('/');
             await homePage.waitForElementToBeVisible(headerPage.navbar);
@@ -13,18 +13,18 @@ import { test } from '../../fixtures/customFixtures';
 
         await test.step('Add product to cart', async () => {
             await productPage.clickAddToCart();
-            await assertions.isTruthy(productPage.dismissDialog());
+            await assertionsUI.isTruthy(productPage.dismissDialog());
         });
 
         await test.step('Go to Cart page', async () => {
             await cartPage.goToCart();
-            await assertions.elementHaveText(cartPage.pageTitle, /products/i);
-            await assertions.elementIsVisible(cartPage.cartTable);
+            await assertionsUI.elementHaveText(cartPage.pageTitle, /products/i);
+            await assertionsUI.elementIsVisible(cartPage.cartTable);
         });
 
         await test.step('Click on Place Order button and verify order modal is opened', async () => {
             await cartPage.clickPlaceOrder();
-            await assertions.elementIsVisible(cartPage.placeOrderModal.placeOrderFormIdentifier);
+            await assertionsUI.elementIsVisible(cartPage.placeOrderModal.placeOrderFormIdentifier);
         });
 
         await test.step('Fill all fields in Place Order form', async () => {
@@ -32,14 +32,14 @@ import { test } from '../../fixtures/customFixtures';
         });
 
         await test.step('Click on Purchase button and verify purchase is completed', async () => {
-            await assertions.elementIsVisible(cartPage.placeOrderModal.purchaseButton);
+            await assertionsUI.elementIsVisible(cartPage.placeOrderModal.purchaseButton);
             await cartPage.placeOrderModal.clickPurchaseButton();
-            await assertions.elementIsVisible(cartPage.purchaseConfirmationModal.confirmationMessage);
+            await assertionsUI.elementIsVisible(cartPage.purchaseConfirmationModal.confirmationMessage);
         });
 
         await test.step('Click on OK button and verify modal is closed', async () => {
             await cartPage.purchaseConfirmationModal.clickConfirmationButton();
             await cartPage.purchaseConfirmationModal.waitForElementToBeHidden(cartPage.purchaseConfirmationModal.modalIdentifier)
-            await assertions.elementIsHidden(cartPage.purchaseConfirmationModal.modalIdentifier);
+            await assertionsUI.elementIsHidden(cartPage.purchaseConfirmationModal.modalIdentifier);
         });
     });
