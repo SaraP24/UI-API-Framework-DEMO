@@ -1,0 +1,24 @@
+{
+  "name": "abstracta-academy-ui-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaraP24/abstracta-Academy-UI-Exercise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise/issues"
+  },
+  "homepage": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.1",
+    "globals": "^16.4.0"
+  }
+}
