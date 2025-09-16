@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+  "generate:petstore": "ts-node scripts/api-tests-generator.ts",
+  "test:petstore": "playwright test tests/generated-petstore.spec.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SaraP24/abstracta-Academy-UI-Exercise.git"
@@ -18,7 +21,12 @@
   "homepage": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise#readme",
   "devDependencies": {
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.1",
-    "globals": "^16.4.0"
+    "@types/node": "^24.5.0",
+    "globals": "^16.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
   }
 }
