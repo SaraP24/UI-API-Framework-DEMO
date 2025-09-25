@@ -8,10 +8,7 @@
     "test:petstore": "playwright test tests/generated-petstore.spec.ts",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "lint": "eslint --ext .ts .",
-    "format": "prettier --write \"**/*.{ts,md,json}\"",
-    "prepare": "husky"
+    "test:debug": "playwright test --debug"
   },
   "repository": {
     "type": "git",
@@ -20,28 +17,22 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise/issues"
   },
   "homepage": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise#readme",
   "devDependencies": {
-    "@eslint/js": "^9.36.0",
+    
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.5.0",
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "eslint": "^9.36.0",
-    "eslint-config-prettier": "^9.0.0",
     "globals": "^16.4.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.0",
-    "prettier": "^3.6.2",
+    
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.1"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "node-fetch": "^3.3.2"

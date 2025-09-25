@@ -1,5 +1,0 @@
-npx eslint .
-if [ $? -ne 0 ]; then
-    echo "ESLint found issues. Commit aborted."
-    exit 1
-fi
