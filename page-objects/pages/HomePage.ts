@@ -43,6 +43,11 @@ export class HomePage extends BasePage {
         return hrefs.map(href => `https://www.demoblaze.com/${href}`);
     }
 
+    async selectProductByIndex(index: number): Promise<void> {
+        const product = this.productTitles.nth(index);
+        return this.click(product);
+    }
+
     async getAllProductsInformation(): Promise<IProductInformation[]> {
         const titles = await this.getProductTitles();
         const prices = await this.getProductPrices();
@@ -62,33 +67,34 @@ export class HomePage extends BasePage {
      */
     async getProductsFromPages(pages: number): Promise<IProductInformation[]> {
         const allProducts: IProductInformation[] = [];
+
+        const productCount = await this.getProductCount();
+        if (productCount === 0) return allProducts;
+
+        let products = await this.getAllProductsInformation();
+
         for (let i = 0; i < pages; i++) {
-            const products = await this.getAllProductsInformation();
+            if (i > 0) {
+                const canGoNext = await (async () => {
+                    try {
+                        return await this.nextPageButton.isVisible();
+                    } catch {
+                        return false;
+                    }
+                })();
+
+                if (!canGoNext) break;
+                const productCount = await this.getProductCount();
+                if (productCount === 0) break;
+                await this.clickNextPage();
+                await this.waitForElementToBeHidden(this.nextPageButton);
+
+            }
+
+            products = await this.getAllProductsInformation();
             allProducts.push(...products);
-
-            // Try to navigate to next page; stop if next not available or not visible
-            const nextVisible = await this.nextPageButton.count().then(c => c > 0 && this.nextPageButton.isVisible().catch(() => false));
-            // `isVisible` is asynchronous; resolve it
-            const canGoNext = await (async () => {
-                try {
-                    return await this.nextPageButton.isVisible();
-                } catch {
-                    return false;
-                }
-            })();
-
-            if (!canGoNext) break;
-
-            await this.clickNextPage();
-            // wait for product cards on the new page to appear
-            await this.waitForElementToBeVisible(this.productCard.first());
         }
 
         return allProducts;
-    }
-
-    async selectProductByIndex(index: number): Promise<void> {
-        const product = this.productTitles.nth(index);
-        return this.click(product);
     }
 }

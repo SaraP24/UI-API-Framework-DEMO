@@ -17,9 +17,9 @@ test('Verify creation of 10 pets with different statuses and validate sold statu
                 await assertionsApi.responseIsOk(response);
 
                 const petData: IPet = await response.json();
-                // Validate shape
-                assertionsApi.validatePetSchema(petData);
 
+                assertionsApi.validatePetSchema(petData);
+                
                 createdPetIds.push(petData.id);
 
                 if (petData.status === 'sold') {
