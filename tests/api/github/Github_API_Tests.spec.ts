@@ -3,6 +3,18 @@ import { expect, test } from '@playwright/test';
 const REPO = 'api_test_repo_1';
 const USER = 'SaraP24';
 
+
+test.beforeAll(async ({ request }) => {
+    const response = await request.post('/user/repos', {
+        data: {
+            name: REPO, 
+            private: false,
+            description: 'Repository created via API for testing purposes',
+        }
+    });
+    expect(response.ok()).toBeTruthy();
+})
+
 test('Create issue on github repository', async ({ request }) => {
     const newIssue = await request.post(`/repos/${USER}/${REPO}/issues`, {
         data: {
@@ -39,5 +51,11 @@ test('Create feature request', async ({ request }) => {
             body: 'Description of the feature...'
         })
     );
+
+    test.afterAll(async ({ request }) => {
+        const response = await request.delete(`/repos/${USER}/${REPO}`);
+        expect(response.ok()).toBeTruthy();
+    })
+    
 })
 
