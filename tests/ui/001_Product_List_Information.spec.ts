@@ -15,7 +15,7 @@ test.describe('DemoBlaze Tests - Product List Information tests', () => {
             console.table(allProductsInfo as IProductInformation[]);
 
             await assertionsUI.isGreaterThan(allProductsInfo.length, 0);
-            await assertionsUI.isTruthy(homePage.writeJSONFile('test-results/productsInformation.json', allProductsInfo));
+            await assertionsUI.isTruthy(await homePage.writeJSONFile('test-results/productsInformation.json', allProductsInfo));
         });
     });
 });

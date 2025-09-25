@@ -34,7 +34,7 @@ test.describe.serial('Pet Store API - Parte II', () => {
         await test.step('Place orders for 5 stored pets', async () => {
             for (const pet of selectedPets) {
                 const orderResponse = await apiHelper.createOrderForPet(pet.id);
-                const orderResponseData: IOrder = await orderResponse.json();
+                const orderResponseData = await orderResponse.json();
 
                 console.log('Order Response Data:', orderResponseData);
 

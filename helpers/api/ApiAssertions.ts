@@ -3,6 +3,7 @@ import Ajv, { SchemaObject } from 'ajv';
 import addFormats from 'ajv-formats';
 import fs from 'fs';
 import path from 'path';
+import { IPet } from "../../interfaces/api/IPetStatus";
 
 const schemaPath = path.resolve(process.cwd(), 'schemas', 'pet.schema.json');
 const petSchema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
@@ -27,7 +28,7 @@ export default class ApiAssertions {
         expect(responseData, `Expected property to be "${expectedProperty}", but got "${responseData.property}"`).toHaveProperty(expectedProperty);
     }
 
-    async responseContainsStatuses(response: APIResponse, expectedStatuses: number[]) {
+    async responseContainsStatuses(response: APIResponse, expectedStatuses: string[]) {
         const status = response.status();
         expect(expectedStatuses).toContain(status);
     }
@@ -37,12 +38,12 @@ export default class ApiAssertions {
         expect(data[property]).toBe(value);
     }
 
-    responseJsonHasProperty(obj: [], property: string) {
+    responseJsonHasProperty(obj: object, property: string) {
         expect(obj).toHaveProperty(property);
     }
 
     // Basic schema validation for a Pet object
-    validatePetSchema(obj: SchemaObject) {
+    validatePetSchema(obj: IPet) {
         expect(typeof obj).toBe('object');
         expect(typeof obj.id).toBe('number');
         expect(typeof obj.name).toBe('string');

@@ -13,7 +13,7 @@ import { test } from '../../fixtures/customFixtures';
 
         await test.step('Add product to cart', async () => {
             await productPage.clickAddToCart();
-            await assertionsUI.isTruthy(productPage.dismissDialog());
+            await assertionsUI.isTruthy(await productPage.dismissDialog());
         });
 
         await test.step('Go to Cart page', async () => {
