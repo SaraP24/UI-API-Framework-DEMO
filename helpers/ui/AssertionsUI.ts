@@ -12,11 +12,11 @@ export default class AssertionsUI {
         await expect(element, options?.message || 'Element is VISIBLE instead of HIDDEN').toBeHidden({ timeout: options?.timeout || SHORT_TIMEOUT });
     }
     
-    async isTruthy(value: any, options?: IAssertionOptions): Promise<void> {
+    async isTruthy(value: boolean, options?: IAssertionOptions): Promise<void> {
         expect(value, options?.message || 'Value is FALSE instead of TRUE').toBeTruthy();
     }
 
-    async isFalsy(value: any, options?: IAssertionOptions): Promise<void> {
+    async isFalsy(value: boolean, options?: IAssertionOptions): Promise<void> {
         expect(value, options?.message || 'Value is TRUE instead of FALSE').toBeFalsy();
     }
 

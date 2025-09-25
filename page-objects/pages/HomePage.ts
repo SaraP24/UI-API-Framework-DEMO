@@ -19,7 +19,7 @@ export class HomePage extends BasePage {
         await this.page.goto(url);
     }
 
-    async getProductCount(): Promise<Number> {
+    async getProductCount(): Promise<number> {
         await this.waitForElementToBeVisible(this.productCard.first());
         return await this.getElementCount(this.productCard);
     }

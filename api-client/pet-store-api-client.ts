@@ -15,14 +15,14 @@ export class PetstoreClient {
     });
   }
 
-  async post(endpoint: string, data: any) {
+  async post(endpoint: string, data: object) {
     return await this.requestContext.post(`${this.baseURL}${endpoint}`, {
       data,
       headers: this.headers
     });
   }
 
-  async put(endpoint: string, data: any) {
+  async put(endpoint: string, data: object) {
     return await this.requestContext.put(`${this.baseURL}${endpoint}`, {
       data,
       headers: this.headers

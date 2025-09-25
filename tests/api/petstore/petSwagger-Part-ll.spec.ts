@@ -5,7 +5,7 @@ import fs from 'fs/promises';
 
 test.describe.serial('Pet Store API - Parte II', () => {
     let selectedPets: IPet[] = [];
-    let placedOrders: IOrder[] = [];
+    const placedOrders: IOrder[] = [];
 
     test('List available pets', async ({ request, assertionsApi }) => {
         const apiHelper = new PetStoreApiHelper(request);

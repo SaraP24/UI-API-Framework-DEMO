@@ -10,7 +10,10 @@
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:api_github": "npx playwright test --project='API Github project'",
-    "test:api_petstore": "npx playwright test --project='API Petstore project'"
+    "test:api_petstore": "npx playwright test --project='API Petstore project'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -28,11 +31,14 @@
     "@eslint/js": "^9.36.0",
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.5.0",
-  "dotenv": "^16.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
+    "dotenv": "^16.3.1",
     "eslint": "^9.36.0",
     "globals": "^16.4.0",
+    "jiti": "^2.6.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.44.1"

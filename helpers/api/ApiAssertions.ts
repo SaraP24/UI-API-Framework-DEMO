@@ -1,5 +1,5 @@
 import { APIRequestContext, APIResponse, expect } from "playwright/test";
-import Ajv from 'ajv';
+import Ajv, { SchemaObject } from 'ajv';
 import addFormats from 'ajv-formats';
 import fs from 'fs';
 import path from 'path';
@@ -12,8 +12,10 @@ addFormats(ajv);
 const validatePet = ajv.compile(petSchema as object);
 
 export default class ApiAssertions {
+    private request: APIRequestContext;
+
     constructor(request: APIRequestContext) {
-        request = request;
+        this.request = request;
     }
     async responseIsOk(response: APIResponse) {
         const statusCode = response.status();
@@ -25,28 +27,22 @@ export default class ApiAssertions {
         expect(responseData, `Expected property to be "${expectedProperty}", but got "${responseData.property}"`).toHaveProperty(expectedProperty);
     }
 
-    async responseContainsStatuses(response: any, expectedStatuses: string[]) {
-        if (!response || !('status' in response)) {
-            throw new Error(`'status' not found in response: ${JSON.stringify(response, null, 2)}`);
-        }
-        expect(expectedStatuses).toContain(response.status);
+    async responseContainsStatuses(response: APIResponse, expectedStatuses: number[]) {
+        const status = response.status();
+        expect(expectedStatuses).toContain(status);
     }
 
-    async responseContainsValue(response: APIResponse, property: string, value: any): Promise<void> {
+    async responseContainsValue(response: APIResponse, property: string, value: number): Promise<void> {
         const data = await response.json();
         expect(data[property]).toBe(value);
     }
 
-    async responseLenghtIsEqualTo(response: any, lenght: number) {
-        expect(response.length).toBe(lenght);
-    }
-
-    responseJsonHasProperty(obj: any, property: string) {
+    responseJsonHasProperty(obj: [], property: string) {
         expect(obj).toHaveProperty(property);
     }
 
     // Basic schema validation for a Pet object
-    validatePetSchema(obj: any) {
+    validatePetSchema(obj: SchemaObject) {
         expect(typeof obj).toBe('object');
         expect(typeof obj.id).toBe('number');
         expect(typeof obj.name).toBe('string');
@@ -64,7 +60,7 @@ export default class ApiAssertions {
         }
     }
 
-    validatePetWithSchema(obj: any) {
+    validatePetWithSchema(obj: SchemaObject) {
         const valid = validatePet(obj);
         if (!valid) {
             throw new Error(`Pet schema validation failed: ${JSON.stringify(validatePet.errors, null, 2)}`);

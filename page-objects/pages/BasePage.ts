@@ -1,5 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { DEFAULT_TIMEOUT } from '../../enums/Timeouts';
+import fs from 'fs';
 
 export class BasePage {
     protected page: Page;
@@ -16,7 +17,7 @@ export class BasePage {
         await locator.click();
     }
 
-    async getElementCount(locator: Locator): Promise<Number> {
+    async getElementCount(locator: Locator): Promise<number> {
         const elements = await locator.count();
         return elements;
     }
@@ -41,9 +42,9 @@ export class BasePage {
         await this.page.waitForTimeout(timeout);
     }
 
-    async writeJSONFile(path: string, data: any): Promise<boolean> {
-        const fs = require('fs');
-        return fs.writeFileSync(path, JSON.stringify(data, null, 2), 'utf-8');
+    async writeJSONFile(filePath: string, data: object): Promise<boolean> {
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+        return true;
     }
 
     async getDialogMessage(): Promise<string> {

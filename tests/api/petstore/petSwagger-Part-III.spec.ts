@@ -63,8 +63,7 @@ test('Add pet with missing name', async () => {
 test('Add pet con ID duplicado', async () => {
   const pet = { id: cyberDog.id, name: "ClonDog", photoUrls: [], status: "available" };
   const res = await api.post('/pet', pet);
-  if (res.status() === 200) errorMessage
-("El sistema aceptó un clon. ¿Estamos en Westworld?");
+  if (res.status() === 200) errorMessage("El sistema aceptó un clon. ¿Estamos en Westworld?");
 });
 
 test('Validate pet structure', async () => {
@@ -87,8 +86,7 @@ for (const status of statuses) {
   test(`Search pets by status: ${status}`, async () => {
     const res = await api.get(`/pet/findByStatus?status=${status}`);
     if (res.status() !== 200 && status !== 'ghosted') {
-      errorMessage
-    (`Search by status '${status}' failed`);
+      errorMessage(`Search by status '${status}' failed`);
     }
   });
 }
@@ -115,8 +113,7 @@ test('Place order', async () => {
 
 test('Get order by ID', async () => {
   const res = await api.get('/store/order/888');
-  if (res.status() !== 200) errorMessage
-("orderId is missing or the order was never placed.");
+  if (res.status() !== 200) errorMessage("orderId is missing or the order was never placed.");
 });
 
 test('Delete order', async () => {
