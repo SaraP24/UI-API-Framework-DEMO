@@ -6,3 +6,4 @@ node_modules/
 /playwright/.cache/
 /availablePetsRetrieved.json
 /placedOrders.json
+.env

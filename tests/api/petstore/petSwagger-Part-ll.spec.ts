@@ -1,6 +1,6 @@
-import { test } from '../../fixtures/customFixtures';
-import PetStoreApiHelper from '../../helpers/api/PetStoreApiHelper';
-import { IPet, IOrder } from '../../interfaces/api/IPetStatus';
+import { test } from '../../../fixtures/customFixtures';
+import PetStoreApiHelper from '../../../helpers/api/PetStoreApiHelper';
+import { IPet, IOrder } from '../../../interfaces/api/IPetStatus';
 import fs from 'fs/promises';
 
 test.describe.serial('Pet Store API - Parte II', () => {

@@ -1,7 +1,11 @@
 import { APIRequestContext, APIResponse, expect } from "playwright/test";
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import petSchema from '../../schemas/pet.schema.json';
+import fs from 'fs';
+import path from 'path';
+
+const schemaPath = path.resolve(process.cwd(), 'schemas', 'pet.schema.json');
+const petSchema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);

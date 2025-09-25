@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import Environments from './enums/Environments';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 export default defineConfig({
@@ -12,7 +15,6 @@ export default defineConfig({
   ],
   timeout: 120000,
   use: {
-    baseURL: Environments.prod,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -22,16 +24,50 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        baseURL: Environments.prod,
+        ...devices['Desktop Chrome']
+      },
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        baseURL: Environments.prod,
+        ...devices['Desktop Firefox']
+      },
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        baseURL: Environments.prod,
+        ...devices['Desktop Safari']
+      },
     },
+
+    {
+      name: 'API Petstore project',
+      testDir: './tests/api/petstore',
+      use: {
+        baseURL: Environments.apiBaseUrlPetstore,
+        extraHTTPHeaders: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          Authorization: `Bearer ${process.env.API_TOKEN}`
+        }
+      },
+    },
+
+    {
+      name: 'API Github project',
+      testDir: './tests/api/github',
+      use: {
+        baseURL: Environments.apiBaseUrlGithub,
+        extraHTTPHeaders: {
+          'Accept': 'application/vnd.github.v3+json',
+          Authorization: `token ${process.env.GITHUB_TOKEN}`
+        }
+      },
+    }
   ],
 });
 

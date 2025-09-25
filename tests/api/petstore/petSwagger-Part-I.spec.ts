@@ -1,8 +1,8 @@
+import { test } from '../../../fixtures/customFixtures';
+import PetStoreApiHelper from '../../../helpers/api/PetStoreApiHelper';
+import { pets } from '../../../payloads/NewPetPayload';
+import { IPet } from '../../../interfaces/api/IPetStatus';
 import { expect } from '@playwright/test';
-import { test } from '../../fixtures/customFixtures';
-import PetStoreApiHelper from '../../helpers/api/PetStoreApiHelper';
-import { pets } from '../../payloads/NewPetPayload';
-import { IPet } from '../../interfaces/api/IPetStatus';
 
 test('Verify creation of 10 pets with different statuses and validate sold status (with teardown)', async ({ request, assertionsApi }) => {
     const apiHelper = new PetStoreApiHelper(request);

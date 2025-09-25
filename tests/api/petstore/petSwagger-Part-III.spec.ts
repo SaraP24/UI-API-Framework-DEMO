@@ -1,5 +1,5 @@
 import { test, request } from "@playwright/test";
-import { PetstoreClient } from '../../api-client/pet-store-api-client';
+import { PetstoreClient } from '../../../api-client/pet-store-api-client';
 
 // Fixtures
 const cyberDog = {
