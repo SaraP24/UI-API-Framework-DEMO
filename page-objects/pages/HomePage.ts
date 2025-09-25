@@ -56,6 +56,37 @@ export class HomePage extends BasePage {
         return products;
     }
 
+    /**
+     * Collect products across N pages (starting from current page).
+     * Stops early if the "Next" button is missing or disabled.
+     */
+    async getProductsFromPages(pages: number): Promise<IProductInformation[]> {
+        const allProducts: IProductInformation[] = [];
+        for (let i = 0; i < pages; i++) {
+            const products = await this.getAllProductsInformation();
+            allProducts.push(...products);
+
+            // Try to navigate to next page; stop if next not available or not visible
+            const nextVisible = await this.nextPageButton.count().then(c => c > 0 && this.nextPageButton.isVisible().catch(() => false));
+            // `isVisible` is asynchronous; resolve it
+            const canGoNext = await (async () => {
+                try {
+                    return await this.nextPageButton.isVisible();
+                } catch {
+                    return false;
+                }
+            })();
+
+            if (!canGoNext) break;
+
+            await this.clickNextPage();
+            // wait for product cards on the new page to appear
+            await this.waitForElementToBeVisible(this.productCard.first());
+        }
+
+        return allProducts;
+    }
+
     async selectProductByIndex(index: number): Promise<void> {
         const product = this.productTitles.nth(index);
         return this.click(product);

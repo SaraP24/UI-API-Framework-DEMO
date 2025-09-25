@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "generate:petstore": "ts-node scripts/api-tests-generator.ts",
-  "test:petstore": "playwright test tests/generated-petstore.spec.ts"
+    "generate:petstore": "ts-node scripts/api-tests-generator.ts",
+    "test:petstore": "playwright test tests/generated-petstore.spec.ts",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "lint": "eslint --ext .ts .",
+    "format": "prettier --write \"**/*.{ts,md,json}\"",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -22,7 +28,16 @@
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.6.0",
+    "@typescript-eslint/parser": "^6.6.0",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.0",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   },

@@ -44,6 +44,11 @@ export default class PetStoreApiHelper {
         return await this.postRequest(STORE_POST_URL, orderData);
     }
 
+    async deletePet(petId: number): Promise<APIResponse> {
+        const url = `${BASE_URL}/pet/${petId}`;
+        return await this.request.delete(url);
+    }
+
     async saveJson<T>(filePath: string, data: T): Promise<void> {
         await fs.writeFile(filePath, JSON.stringify(data, null, 2));
     }
