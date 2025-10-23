@@ -1,12 +1,49 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strict": true,
     "outDir": "dist"
   },
-  "include": ["scripts", "tests", "api-client", "helpers", "schemas"]
+  "paths": {
+    "@fixtures/*": [
+      "./fixtures/*"
+    ],
+    "@test-data/*": [
+      "./test-data/*"
+    ],
+    "@test-data": [
+      "./test-data/index"
+    ],
+    "@helpers/*": [
+      "./helpers/*"
+    ],
+    "@config/*": [
+      "./config/*"
+    ],
+    "@enums": [
+      "./models/enums/index"
+    ],
+    "@interface/*": [
+      "./models/interface/*"
+    ],
+    "@poms": [
+      "./page-objects/pages/index"
+    ],
+    "@tests/*": [
+      "./tests/*"
+    ],
+    "@test-ui/*": [
+      "./tests/ui/*"
+    ],
+    "@test-api/*": [
+      "./tests/api/*"
+    ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
 }

@@ -1,16 +1,16 @@
 {
-  "name": "abstracta-academy-ui-exercise",
+  "name": "ui-api-framework-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate:petstore": "ts-node scripts/api-tests-generator.ts",
-    "test:petstore": "playwright test tests/generated-petstore.spec.ts",
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
-    "test:api_github": "npx playwright test --project='API Github project'",
-    "test:api_petstore": "npx playwright test --project='API Petstore project'",
+    "test": "npx playwright test",
+    "test:headed": "npm run test --headed",
+    "test:debug": "nmp run test --debug",
+    "test:api_github": "npm run test --project='API Github project'",
+    "test:api_petstore": "npm run test --project='API Petstore project'",
+    "generate:petstore": "npx ts-node scripts/api-tests-generator.ts",
+    "test:petstore": "npm run test tests/generated-petstore.spec.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit"
@@ -22,7 +22,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise/issues"
   },
