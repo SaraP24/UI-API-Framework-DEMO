@@ -1,4 +1,4 @@
-/* import fs from 'fs';
+import fs from 'fs';
 import fetch from 'node-fetch';
 
 const SWAGGER_URL = 'https://petstore.swagger.io/v2/swagger.json';
@@ -9,7 +9,7 @@ type SwaggerDoc = {
 };
 
 // Genera un payload de ejemplo a partir del schema o example del Swagger
-function generatePayload(schema: any): any {
+export function generatePayload(schema: any): any {
   if (!schema) return {};
 
   if (schema.example) return schema.example;
@@ -71,4 +71,4 @@ test('${method.toUpperCase()} ${path}', async () => {
   console.log('✅ Tests generados en tests/generated-petstore.spec.ts');
 }
 
-generateTests(); */
+generateTests();
