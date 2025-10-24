@@ -4,6 +4,15 @@ export interface IPet {
   id: number;
   name: string;
   status: PetStatus;
+  photoUrls?: string[];
+  category?: {
+    id: number;
+    name: string;
+  };
+  tags?: Array<{
+    id: number;
+    name: string;
+  }>;
 }
 
 export interface IOrder {

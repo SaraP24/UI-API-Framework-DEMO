@@ -1,19 +1,16 @@
-import { test } from '../../../fixtures/customFixtures';
-import PetStoreApiHelper from '../../../helpers/api/PetStoreApiHelper';
-import { pets } from '../../../payloads/NewPetPayload';
-import { IPet } from '../../../interfaces/api/IPetStatus';
+import { test } from '../../../../fixtures/BasePetTest';
+import { pets } from '../../../../payloads/NewPetPayload';
+import { IPet } from '../../../../interfaces/api/IPetStatus';
 import { expect } from '@playwright/test';
 
-test('Verify creation of 10 pets with different statuses and validate sold status (with teardown)', async ({ request, assertionsApi }) => {
-    const apiHelper = new PetStoreApiHelper(request);
-
+test('Verify creation of 10 pets with different statuses and validate sold status (with teardown)', async ({ petApi, assertionsApi, cleanupPets }) => {
     const createdPetIds: number[] = [];
     const soldPets: IPet[] = [];
 
     try {
         await test.step('Create pets and validate responses', async () => {
             for (const pet of pets) {
-                const response = await apiHelper.createPet(pet);
+                const response = await petApi.createPet(pet);
                 await assertionsApi.responseIsOk(response);
 
                 const petData: IPet = await response.json();
@@ -41,23 +38,12 @@ test('Verify creation of 10 pets with different statuses and validate sold statu
         });
 
         await test.step('Fetch the sold pet by ID and validate response', async () => {
-            const response = await apiHelper.getPetById(soldPet.id);
+            const response = await petApi.getPetById(soldPet.id);
             await assertionsApi.responseIsOk(response);
             await assertionsApi.responseHasValidPet(response);
         });
     } finally {
         // Teardown: delete any created pets to avoid polluting the public Petstore
-        for (const id of createdPetIds) {
-            try {
-                const delResp = await apiHelper.deletePet(id);
-                // Some deletions may return 200 or 404 depending on race/previous state; accept both
-                const status = delResp.status();
-                if (status !== 200 && status !== 404) {
-                    console.warn(`Unexpected delete status for pet ${id}: ${status}`);
-                }
-            } catch (e) {
-                console.warn(`Failed to delete pet ${id}: ${e}`);
-            }
-        }
+        await cleanupPets(createdPetIds);
     }
 });

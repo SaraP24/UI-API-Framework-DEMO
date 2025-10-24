@@ -3,7 +3,7 @@ import Ajv, { SchemaObject } from 'ajv';
 import addFormats from 'ajv-formats';
 import fs from 'fs';
 import path from 'path';
-import { IPet } from "../../interfaces/api/IPetStatus";
+import { IPet } from "../interfaces/api/IPetStatus";
 
 const schemaPath = path.resolve(process.cwd(), 'schemas', 'pet.schema.json');
 const petSchema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
@@ -18,6 +18,7 @@ export default class ApiAssertions {
     constructor(request: APIRequestContext) {
         this.request = request;
     }
+
     async responseIsOk(response: APIResponse) {
         const statusCode = response.status();
         expect(statusCode, `Response is not 200, status code received: ${statusCode}`).toBe(200);
@@ -59,6 +60,23 @@ export default class ApiAssertions {
             const errors = validatePet.errors;
             throw new Error(`Pet schema validation failed: ${JSON.stringify(errors, null, 2)}`);
         }
+    }
+
+    // New assertion methods
+    async isGreaterThan(actual: number, expected: number, message?: string) {
+        expect(actual, message).toBeGreaterThan(expected);
+    }
+
+    async isTruthy(value: any, message?: string) {
+        expect(value, message).toBeTruthy();
+    }
+
+    async assertEqual(actual: any, expected: any, message?: string) {
+        expect(actual, message).toBe(expected);
+    }
+
+    async assertArrayLength(array: any[], expectedLength: number, message?: string) {
+        expect(array.length, message).toBe(expectedLength);
     }
 
     validatePetWithSchema(obj: SchemaObject) {

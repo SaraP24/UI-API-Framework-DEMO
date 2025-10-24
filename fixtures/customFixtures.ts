@@ -4,8 +4,8 @@ import { ProductPage } from "../page-objects/pages/ProductPage";
 import { Header } from "../page-objects/pages/Header";
 import { CartPage } from "../page-objects/pages/CartPage";
 
-import  AssertionsUI  from "../helpers/ui/AssertionsUI";
-import  ApiAssertions  from "../helpers/api/ApiAssertions";
+import  AssertionsUI  from "../assertions/AssertionsUI";
+import  ApiAssertions  from "../assertions/ApiAssertions";
 
 type CustomFixtures = {
   homePage: HomePage;
