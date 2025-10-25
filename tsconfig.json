@@ -9,29 +9,38 @@
     "outDir": "dist"
   },
   "paths": {
+    "@api-client": [
+      "./api-client/*"
+    ],
+    "@assertions": [
+      "./assertions/*"
+    ],
+    "@endpoints": [
+      "./endpoints/*"
+    ],
+    "@enums": [
+      "./enums/*"
+    ],
     "@fixtures/*": [
-      "./fixtures/*"
+      "fixtures/*"
+    ],
+    "@interfaces": [
+      "./interfaces/*"
+    ],
+    "@poms": [
+      "./page-objects/*"
+    ],
+    "@payloads": [
+      "./payloads/*"
+    ],
+    "@schemas": [
+      "./schemas/*"
+    ],
+    "@scripts": [
+      "./scripts/*"
     ],
     "@test-data/*": [
       "./test-data/*"
-    ],
-    "@test-data": [
-      "./test-data/index"
-    ],
-    "@helpers/*": [
-      "./helpers/*"
-    ],
-    "@config/*": [
-      "./config/*"
-    ],
-    "@enums": [
-      "./models/enums/index"
-    ],
-    "@interface/*": [
-      "./models/interface/*"
-    ],
-    "@poms": [
-      "./page-objects/pages/index"
     ],
     "@tests/*": [
       "./tests/*"

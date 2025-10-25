@@ -13,7 +13,9 @@
     "test:petstore": "npm run test tests/generated-petstore.spec.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "npm:outdated": "npm outdated",
+    "npm:update": "npm update"
   },
   "repository": {
     "type": "git",
@@ -22,9 +24,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise/issues"
-  },
   "homepage": "https://github.com/SaraP24/abstracta-Academy-UI-Exercise#readme",
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -43,6 +42,7 @@
     "typescript-eslint": "^8.44.1"
   },
   "dependencies": {
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "tsconfig-paths": "^4.2.0"
   }
 }
