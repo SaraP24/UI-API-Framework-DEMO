@@ -1,7 +1,7 @@
 import { APIResponse } from '@playwright/test';
 import { BaseApiClient } from './BaseApiClient';
-import { IPet } from '../interfaces/api/IPetStatus';
-import { Routes } from '../endpoints/Routes';
+import { IPet } from '../interfaces/api';
+import { Routes } from '../endpoints';
 
 export interface IPetApiResponse<T = any> {
     data: T;
@@ -94,4 +94,17 @@ export class PetStoreApiClient extends BaseApiClient {
         const buffer = await fs.readFile(filePath);
         return new Blob([buffer]);
     }
+
+    async createOrderForPet(petId: number): Promise<APIResponse> {
+        return this.post('/store/order', {
+            data: {
+                petId: petId,
+                quantity: 1,
+                shipDate: new Date().toISOString(),
+                status: 'placed',
+                complete: true
+            }
+        });
+    }
+    
 }

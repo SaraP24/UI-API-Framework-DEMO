@@ -79,6 +79,18 @@ export default class ApiAssertions {
         expect(array.length, message).toBe(expectedLength);
     }
 
+    async createOrderForPet(petId: number): Promise<APIResponse> {
+        return this.request.post('/store/order', {
+            data: {
+                petId: petId,
+                quantity: 1,
+                shipDate: new Date().toISOString(),
+                status: 'placed',
+                complete: true
+            }
+        });
+    }
+
     validatePetWithSchema(obj: SchemaObject) {
         const valid = validatePet(obj);
         if (!valid) {
