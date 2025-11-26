@@ -5,7 +5,7 @@ const pathUrl = '/pet/example/uploadImage';
 const endPoint = `${baseUrl}${pathName}${pathUrl}`;
 
 test.describe('pet /pet/{petId}/uploadImage', () => {
-  test('POST: Should return success', async ({ request }) => {
+  test('POST: Upload image by pet id', async ({ request }) => {
     const response = await request.post(`${endPoint}`, {
       params: {petId:"example"},
     });
