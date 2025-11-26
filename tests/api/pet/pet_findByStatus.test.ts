@@ -1,4 +1,4 @@
-import { test } from '../../../../fixtures/BasePetTest';
+import { test } from '../../../fixtures/BasePetTest';
 
 test.describe('pet /pet/findByStatus', () => {
   test('GET: Should return success', async ({ petApi, assertionsApi }) => {

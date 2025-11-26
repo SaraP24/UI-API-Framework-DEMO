@@ -1,6 +1,6 @@
-import { test } from '../../../../fixtures/BasePetTest';
-import { IPet } from '../../../../interfaces/api/IPetStatus';
-import { PET_STATUSES } from '../../../../test_data/petstore/petTestData';
+import { test } from '../../../fixtures/BasePetTest';
+import { IPet } from '../../../interfaces/api/IPetStatus';
+import { PET_STATUSES } from '../../../test_data/petstore/petTestData';
 
 test.describe('Pet Store API - Pet Status Management', () => {
     let selectedPets: IPet[] = [];

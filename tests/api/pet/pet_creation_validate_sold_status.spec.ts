@@ -1,6 +1,6 @@
-import { test } from '../../../../fixtures/BasePetTest';
-import { pets } from '../../../../payloads/NewPetPayload';
-import { IPet } from '../../../../interfaces/api/IPetStatus';
+import { test } from '../../../fixtures/BasePetTest';
+import { pets } from '../../../payloads/NewPetPayload';
+import { IPet } from '../../../interfaces/api/IPetStatus';
 import { expect } from '@playwright/test';
 
 test('Verify creation of 10 pets with different statuses and validate sold status (with teardown)', async ({ petApi, assertionsApi, cleanupPets }) => {

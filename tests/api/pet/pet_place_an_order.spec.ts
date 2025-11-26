@@ -1,5 +1,5 @@
-import { test } from '../../../../fixtures/BasePetTest';
-import { IPet, IOrder } from '../../../../interfaces/api/IPetStatus';
+import { test } from '../../../fixtures/BasePetTest';
+import { IPet, IOrder } from '../../../interfaces/api/IPetStatus';
 import fs from 'fs/promises';
 
 test('Create an order for each of the 5 selected pets and validate responses', async ({ petApi, assertionsApi }) => {
