@@ -4,8 +4,8 @@ const pathName = '/v2';
 const pathUrl = '/user';
 const endPoint = `${baseUrl}${pathName}${pathUrl}`;
 
-test.describe('user /user', () => {
-  test('POST: Should return success', async ({ request }) => {
+test.describe('Create User', () => {
+  test('should successfully create a new user with valid data', async ({ request }) => {
     const response = await request.post(`${endPoint}`, {
     });
     expect(response.status()).toBe(200);

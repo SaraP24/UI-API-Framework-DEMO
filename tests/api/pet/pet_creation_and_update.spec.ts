@@ -4,14 +4,14 @@ const pathName = '/v2';
 const pathUrl = '/pet';
 const endPoint = `${baseUrl}${pathName}${pathUrl}`;
 
-test.describe('pet /pet', () => {
-  test('POST: Should return success', async ({ request }) => {
+test.describe('Create and Update Pets', () => {
+  test('should successfully create a new pet with valid data', async ({ request }) => {
     const response = await request.post(`${endPoint}`, {
     });
     expect(response.status()).toBe(200);
   });
 
-  test('PUT: Should return success', async ({ request }) => {
+  test('should successfully update an existing pet with new data', async ({ request }) => {
     const response = await request.put(`${endPoint}`, {
     });
     expect(response.status()).toBe(200);

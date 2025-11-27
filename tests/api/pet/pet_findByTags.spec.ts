@@ -4,8 +4,8 @@ const pathName = '/v2';
 const pathUrl = '/pet/findByTags';
 const endPoint = `${baseUrl}${pathName}${pathUrl}`;
 
-test.describe('pet /pet/findByTags', () => {
-  test('GET: Should return success', async ({ request }) => {
+test.describe('Find Pets by Tags', () => {
+  test('should successfully retrieve pets filtered by tags', async ({ request }) => {
     const response = await request.get(`${endPoint}`, {
       params: {tags:"example"},
     });

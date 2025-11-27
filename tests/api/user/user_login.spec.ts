@@ -4,8 +4,8 @@ const pathName = '/v2';
 const pathUrl = '/user/login';
 const endPoint = `${baseUrl}${pathName}${pathUrl}`;
 
-test.describe('user /user/login', () => {
-  test('GET: Should return success', async ({ request }) => {
+test.describe('Login', () => {
+  test('should successfully authenticate a user with valid credentials', async ({ request }) => {
     const response = await request.get(`${endPoint}`, {
       params: {username:"example",password:"example"},
     });
