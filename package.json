@@ -42,6 +42,7 @@
     "typescript-eslint": "^8.44.1"
   },
   "dependencies": {
+    "chalk": "^5.6.2",
     "node-fetch": "^3.3.2",
     "tsconfig-paths": "^4.2.0"
   }

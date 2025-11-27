@@ -1,6 +1,7 @@
 import { test as base } from './customFixtures';
 import { PetStoreApiClient } from '../api-client/PetStoreApiClient';
 import { IApiClientConfig } from '../interfaces/api/IApiClientConfig';
+import { Config } from '../src/config/Config';
 
 type PetTestFixtures = {
     petApi: PetStoreApiClient;
@@ -10,14 +11,15 @@ type PetTestFixtures = {
 export const test = base.extend<PetTestFixtures>({
     petApi: async ({ request }, use) => {
         const config: IApiClientConfig = {
-            baseURL: process.env.PETSTORE_BASE_URL || 'https://petstore.swagger.io/v2',
+            baseURL: Config.PETSTORE_BASE_URL,
             requestContext: request,
             defaultHeaders: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                ...(process.env.API_TOKEN ? { Authorization: `Bearer ${process.env.API_TOKEN}` } : {})
+                ...(Config.PETSTORE_API_TOKEN ? { Authorization: `Bearer ${Config.PETSTORE_API_TOKEN}` } : {})
             },
-            retries: 1
+            retries: Config.API_RETRY_ATTEMPTS,
+            timeout: Config.UI_NAVIGATION_TIMEOUT
         };
 
         const client = new PetStoreApiClient(config);

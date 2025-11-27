@@ -8,6 +8,9 @@ import  AssertionsUI  from "../assertions/AssertionsUI";
 import  ApiAssertions  from "../assertions/ApiAssertions";
 import { PetStoreApiClient } from "../api-client/PetStoreApiClient";
 import { IApiClientConfig } from "../interfaces/api/IApiClientConfig";
+import { Config } from "../src/config/Config";
+
+import chalk from "chalk";
 
 type CustomFixtures = {
   homePage: HomePage;
@@ -47,19 +50,27 @@ const test = base.extend<CustomFixtures>({
 
   petApi: async ({ request }, use) => {
     const config: IApiClientConfig = {
-      baseURL: process.env.PETSTORE_BASE_URL || 'https://petstore.swagger.io/v2',
+      baseURL: Config.PETSTORE_BASE_URL,
       requestContext: request,
       defaultHeaders: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        ...(process.env.API_TOKEN ? { Authorization: `Bearer ${process.env.API_TOKEN}` } : {})
+        ...(Config.PETSTORE_API_TOKEN ? { Authorization: `Bearer ${Config.PETSTORE_API_TOKEN}` } : {})
       },
-      retries: 1
+      retries: Config.API_RETRY_ATTEMPTS,
+      timeout: Config.UI_NAVIGATION_TIMEOUT
     };
     
     const client = new PetStoreApiClient(config);
     await use(client);
   }
+});
+
+test.beforeAll(async () => {
+  console.log(chalk.blue('\n' + '='.repeat(50)));
+    console.log(chalk.blue('TEST EXECUTION STARTED - Configuration Summary'));
+    console.log(chalk.blue('='.repeat(50)));
+    Config.printConfig();
 });
 
 export { test };
