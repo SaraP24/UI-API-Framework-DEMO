@@ -1,7 +1,7 @@
 import { test } from '../../../fixtures/customFixtures';
 import { expect } from '@playwright/test';
 
-test.describe('User Management - Create Multiple Users from Array', () => {
+test.describe('Create Multiple Users from Array', () => {
   test('should successfully create multiple users from an array of user data', async ({ petApi, assertionsApi }) => {
     const users = [
       { username: 'user1', firstName: 'User', lastName: 'One', email: 'user1@example.com', password: 'pass1' },

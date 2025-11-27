@@ -1,7 +1,7 @@
 import { test } from '../../../fixtures/customFixtures';
 import { expect } from '@playwright/test';
 
-test.describe('User Management - Create User', () => {
+test.describe('Create User', () => {
   test('should successfully create a new user with valid data', async ({ petApi, assertionsApi }) => {
     const newUser = {
       username: 'testuser',

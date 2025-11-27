@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "compile": "npx tsc --noEmit",
     "test": "npx playwright test",
-    "test:headed": "npm run test --headed",
     "test:debug": "nmp run test --debug",
     "test:api_github": "npm run test --project='API Github project'",
     "test:api_petstore": "npm run test --project='API Petstore project'",
