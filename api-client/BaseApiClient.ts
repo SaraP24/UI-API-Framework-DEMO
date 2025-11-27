@@ -1,5 +1,6 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
 import { IApiClientConfig, IRequestOptions } from '../interfaces/api/IApiClientConfig';
+import { ApiException } from '../src/errors';
 import fs from 'fs/promises';
 
 export class BaseApiClient {
@@ -59,20 +60,56 @@ export class BaseApiClient {
                         throw new Error(`Unsupported HTTP method: ${method}`);
                 }
 
+                // Validate response status
                 if (options.validateStatus !== false && !response.ok()) {
-                    throw new Error(`HTTP ${response.status()} on ${method} ${url}`);
+                    const responseBody = await response.text();
+                    throw new ApiException(
+                        method,
+                        endpoint,
+                        response.status(),
+                        options.data, // request data
+                        responseBody, // response data
+                        `HTTP ${response.status()}: ${response.statusText()}`
+                    );
                 }
 
                 return response;
             } catch (error) {
+                // If it's already an ApiException, re-throw it
+                if (error instanceof ApiException) {
+                    throw error;
+                }
+
                 lastError = error as Error;
                 if (attempt < this.retries) {
-                    await this.delay(Math.pow(2, attempt) * 1000); // Exponential backoff
+                    const delayMs = Math.pow(2, attempt) * 1000; // Exponential backoff
+                    console.warn(`⚠️  Retry attempt ${attempt + 1}/${this.retries} after ${delayMs}ms`);
+                    await this.delay(delayMs);
                 }
             }
         }
         
-        throw lastError;
+        // Throw final error as ApiException
+        if (lastError) {
+            throw new ApiException(
+                method,
+                endpoint,
+                0, // Status code unknown for network errors
+                options.data,
+                lastError.message,
+                `Failed after ${this.retries + 1} attempts: ${lastError.message}`
+            );
+        }
+
+        // Should never reach here, but keep type safety
+        throw new ApiException(
+            method,
+            endpoint,
+            0,
+            options.data,
+            undefined,
+            'Unknown error occurred'
+        );
     }
 
     protected buildUrl(endpoint: string): string {

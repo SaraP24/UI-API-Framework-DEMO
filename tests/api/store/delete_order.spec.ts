@@ -1,13 +1,15 @@
-import { test, expect } from '@playwright/test';
-const baseUrl = 'https://petstore.swagger.io';
-const pathName = '/v2';
-const pathUrl = '/store/order';
-const endPoint = `${baseUrl}${pathName}${pathUrl}`;
+import { test } from '../../../fixtures/customFixtures';
+import { expect } from '@playwright/test';
 
 test.describe('Create Order', () => {
-  test('should successfully create a new order for a pet', async ({ request }) => {
-    const response = await request.post(`${endPoint}`, {
-    });
-    expect(response.status()).toBe(200);
+  test('should successfully create a new order for a pet', async ({ petApi, assertionsApi }) => {
+    const petId = 1;
+    
+    const response = await petApi.createOrderForPet(petId);
+    await assertionsApi.responseIsOk(response);
+    
+    const order = await response.json();
+    expect(order.petId).toBe(petId);
+    expect(order.status).toBe('placed');
   });
 });

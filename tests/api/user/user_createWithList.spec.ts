@@ -1,13 +1,17 @@
-import { test, expect } from '@playwright/test';
-const baseUrl = 'https://petstore.swagger.io';
-const pathName = '/v2';
-const pathUrl = '/user/createWithList';
-const endPoint = `${baseUrl}${pathName}${pathUrl}`;
+import { test } from '../../../fixtures/customFixtures';
+import { expect } from '@playwright/test';
 
-test.describe('Create Multiple Users from List', () => {
-  test('should successfully create multiple users from a list of user data', async ({ request }) => {
-    const response = await request.post(`${endPoint}`, {
-    });
-    expect(response.status()).toBe(200);
+test.describe('User Management - Create Multiple Users from List', () => {
+  test('should successfully create multiple users from a list of user data', async ({ petApi, assertionsApi }) => {
+    const users = [
+      { username: 'user3', firstName: 'User', lastName: 'Three', email: 'user3@example.com', password: 'pass3' },
+      { username: 'user4', firstName: 'User', lastName: 'Four', email: 'user4@example.com', password: 'pass4' }
+    ];
+
+    const response = await petApi.createUsersWithList(users);
+    await assertionsApi.responseIsOk(response);
+    
+    const result = await response.json();
+    expect(result.code).toBe(200);
   });
 });

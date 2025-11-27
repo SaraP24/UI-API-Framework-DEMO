@@ -1,14 +1,12 @@
-import { test, expect } from '@playwright/test';
-const baseUrl = 'https://petstore.swagger.io';
-const pathName = '/v2';
-const pathUrl = '/user/login';
-const endPoint = `${baseUrl}${pathName}${pathUrl}`;
+import { test } from '../../../fixtures/customFixtures';
+import { expect } from '@playwright/test';
 
-test.describe('Login', () => {
-  test('should successfully authenticate a user with valid credentials', async ({ request }) => {
-    const response = await request.get(`${endPoint}`, {
-      params: {username:"example",password:"example"},
-    });
-    expect(response.status()).toBe(200);
+test.describe('User Authentication - Login', () => {
+  test('should successfully authenticate a user with valid credentials', async ({ petApi, assertionsApi }) => {
+    const response = await petApi.userLogin('testuser', 'password123');
+    await assertionsApi.responseIsOk(response);
+    
+    const result = await response.json();
+    expect(result.message).toBeDefined();
   });
 });

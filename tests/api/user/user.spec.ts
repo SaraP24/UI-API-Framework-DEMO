@@ -1,13 +1,20 @@
-import { test, expect } from '@playwright/test';
-const baseUrl = 'https://petstore.swagger.io';
-const pathName = '/v2';
-const pathUrl = '/user';
-const endPoint = `${baseUrl}${pathName}${pathUrl}`;
+import { test } from '../../../fixtures/customFixtures';
+import { expect } from '@playwright/test';
 
-test.describe('Create User', () => {
-  test('should successfully create a new user with valid data', async ({ request }) => {
-    const response = await request.post(`${endPoint}`, {
-    });
-    expect(response.status()).toBe(200);
+test.describe('User Management - Create User', () => {
+  test('should successfully create a new user with valid data', async ({ petApi, assertionsApi }) => {
+    const newUser = {
+      username: 'testuser',
+      firstName: 'Test',
+      lastName: 'User',
+      email: 'test@example.com',
+      password: 'password123'
+    };
+
+    const response = await petApi.createUser(newUser);
+    await assertionsApi.responseIsOk(response);
+    
+    const result = await response.json();
+    expect(result.code).toBe(200);
   });
 });

@@ -1,14 +1,14 @@
-import { test, expect } from '@playwright/test';
-const baseUrl = 'https://petstore.swagger.io';
-const pathName = '/v2';
-const pathUrl = '/pet/findByTags';
-const endPoint = `${baseUrl}${pathName}${pathUrl}`;
+import { test } from '../../../fixtures/customFixtures';
+import { expect } from '@playwright/test';
 
 test.describe('Find Pets by Tags', () => {
-  test('should successfully retrieve pets filtered by tags', async ({ request }) => {
-    const response = await request.get(`${endPoint}`, {
-      params: {tags:"example"},
-    });
-    expect(response.status()).toBe(200);
+  test('should successfully retrieve pets filtered by tags', async ({ petApi, assertionsApi }) => {
+    const tags = ['dog', 'friendly'];
+    
+    const response = await petApi.findPetsByTags(tags);
+    await assertionsApi.responseIsOk(response);
+    
+    const pets = await response.json();
+    expect(Array.isArray(pets)).toBeTruthy();
   });
 });

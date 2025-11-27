@@ -1,13 +1,12 @@
-import { test, expect } from '@playwright/test';
-const baseUrl = 'https://petstore.swagger.io';
-const pathName = '/v2';
-const pathUrl = '/store/inventory';
-const endPoint = `${baseUrl}${pathName}${pathUrl}`;
+import { test } from '../../../fixtures/customFixtures';
+import { expect } from '@playwright/test';
 
-test.describe('Get Inventory', () => {
-  test('should successfully retrieve the current store inventory', async ({ request }) => {
-    const response = await request.get(`${endPoint}`, {
-    });
-    expect(response.status()).toBe(200);
+test.describe('Get Store Inventory', () => {
+  test('should successfully retrieve the current store inventory', async ({ petApi, assertionsApi }) => {
+    const response = await petApi.getInventory();
+    await assertionsApi.responseIsOk(response);
+    
+    const inventory = await response.json();
+    expect(typeof inventory).toBe('object');
   });
 });

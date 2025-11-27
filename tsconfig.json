@@ -15,6 +15,9 @@
     "@assertions": [
       "./assertions/*"
     ],
+    "@errors": [
+      "./src/errors/*"
+    ],
     "@endpoints": [
       "./endpoints/*"
     ],
