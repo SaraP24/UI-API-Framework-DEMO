@@ -2,6 +2,9 @@
   "name": "ui-api-framework-demo",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "main": "index.js",
   "scripts": {
     "compile": "npx tsc --noEmit",
