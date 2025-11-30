@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-import { SHORT_TIMEOUT } from '../../enums/Timeouts';
+import { SHORT_TIMEOUT } from '../../config/Timeouts';
 import { BasePage } from '../pages/BasePage';
 
 export class ProductPage extends BasePage {

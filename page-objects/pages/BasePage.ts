@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-import { DEFAULT_TIMEOUT } from '../../enums/Timeouts';
+import { DEFAULT_TIMEOUT } from '../../config/Timeouts';
 import fs from 'fs';
 
 export class BasePage {

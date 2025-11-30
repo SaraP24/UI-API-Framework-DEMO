@@ -6,7 +6,6 @@ export interface IApiClientConfig {
     defaultHeaders?: Record<string, string>;
     timeout?: number;
     retries?: number;
-    offline?: boolean;
 }
 
 export interface IRequestOptions {

@@ -1,7 +1,8 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
 import { IApiClientConfig, IRequestOptions } from '../interfaces/api/IApiClientConfig';
-import { ApiException } from '../src/errors';
+import { ApiException } from '../errors';
 import fs from 'fs/promises';
+import Config from '../config/Config';
 
 export class BaseApiClient {
     protected baseURL: string;
@@ -9,18 +10,16 @@ export class BaseApiClient {
     protected defaultHeaders: Record<string, string>;
     protected timeout: number;
     protected retries: number;
-    protected offline: boolean;
 
     constructor(config: IApiClientConfig) {
-        this.baseURL = config.baseURL;
+        this.baseURL = Config.PETSTORE_BASE_URL;
         this.requestContext = config.requestContext;
         this.defaultHeaders = config.defaultHeaders || {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         };
-        this.timeout = config.timeout || 30000;
-        this.retries = config.retries || 0;
-        this.offline = config.offline || false;
+        this.timeout = Config.API_REQUEST_TIMEOUT;
+        this.retries = Config.API_RETRY_ATTEMPTS;
     }
 
     protected async request(
@@ -28,14 +27,10 @@ export class BaseApiClient {
         endpoint: string,
         options: IRequestOptions = {}
     ): Promise<APIResponse> {
-        if (this.offline) {
-            return this.mockResponse(endpoint, method);
-        }
-
         const url = this.buildUrl(endpoint);
         const requestOptions = this.buildRequestOptions(options);
-        
-        let lastError: Error | null = null;
+
+        const lastError: Error | null = null;
         for (let attempt = 0; attempt <= this.retries; attempt++) {
             try {
                 let response: APIResponse;
@@ -79,37 +74,9 @@ export class BaseApiClient {
                 if (error instanceof ApiException) {
                     throw error;
                 }
-
-                lastError = error as Error;
-                if (attempt < this.retries) {
-                    const delayMs = Math.pow(2, attempt) * 1000; // Exponential backoff
-                    console.warn(`⚠️  Retry attempt ${attempt + 1}/${this.retries} after ${delayMs}ms`);
-                    await this.delay(delayMs);
-                }
             }
         }
-        
-        // Throw final error as ApiException
-        if (lastError) {
-            throw new ApiException(
-                method,
-                endpoint,
-                0, // Status code unknown for network errors
-                options.data,
-                lastError.message,
-                `Failed after ${this.retries + 1} attempts: ${lastError.message}`
-            );
-        }
-
-        // Should never reach here, but keep type safety
-        throw new ApiException(
-            method,
-            endpoint,
-            0,
-            options.data,
-            undefined,
-            'Unknown error occurred'
-        );
+        throw lastError || new Error('Unknown error occurred during API request');
     }
 
     protected buildUrl(endpoint: string): string {
@@ -139,16 +106,11 @@ export class BaseApiClient {
     }
 
     protected async mockResponse(endpoint: string, method: string): Promise<APIResponse> {
-        console.warn(`📴 Offline mode: Mocking ${method} ${endpoint}`);
         return {
             status: () => 200,
             ok: () => true,
             json: async () => ({ message: `Mocked ${method} response for ${endpoint}` })
         } as unknown as APIResponse;
-    }
-
-    private delay(ms: number): Promise<void> {
-        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     // Utility methods for common HTTP methods
@@ -172,7 +134,7 @@ export class BaseApiClient {
         return this.request('DELETE', endpoint, options);
     }
 
-      async saveJson<T>(filePath: string, data: T): Promise<void> {
+    async saveJson<T>(filePath: string, data: T): Promise<void> {
         await fs.writeFile(filePath, JSON.stringify(data, null, 2));
     }
 

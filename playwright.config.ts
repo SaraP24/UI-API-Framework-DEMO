@@ -1,16 +1,16 @@
 import { defineConfig, devices } from '@playwright/test';
-import Environments from './enums/Environments';
-import { Config } from './src/config/Config';
+import Environments from './config/Environments';
+import { Config } from './config/Config';
 
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
-  retries: 2,
+  retries: Config.RETRIES,
   workers: Config.WORKERS,
   reporter: [
     ['html'], ['list']
   ],
-  timeout: 120000,
+  timeout: Config.UI_ACTION_TIMEOUT,
   use: {
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
@@ -29,14 +29,14 @@ export default defineConfig({
   /*   {
       name: 'firefox',
       use: {
-        baseURL: Environments.prod,
+        baseURL: Environments.staging,
         ...devices['Desktop Firefox']
       },
     },
     {
       name: 'webkit',
       use: {
-        baseURL: Environments.prod,
+        baseURL: Environments.staging,
         ...devices['Desktop Safari']
       },
     }, */
@@ -54,5 +54,8 @@ export default defineConfig({
       },
     },
   ],
+
+  // Global setup runs once before all workers
+  globalSetup: require.resolve('./global-setup.ts'),
 });
 

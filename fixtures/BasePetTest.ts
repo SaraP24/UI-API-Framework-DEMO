@@ -1,7 +1,7 @@
 import { test as base } from './customFixtures';
 import { PetStoreApiClient } from '../api-client/PetStoreApiClient';
 import { IApiClientConfig } from '../interfaces/api/IApiClientConfig';
-import { Config } from '../src/config/Config';
+import { Config } from '../config/Config';
 
 type PetTestFixtures = {
     petApi: PetStoreApiClient;
@@ -19,7 +19,6 @@ export const test = base.extend<PetTestFixtures>({
                 ...(Config.PETSTORE_API_TOKEN ? { Authorization: `Bearer ${Config.PETSTORE_API_TOKEN}` } : {})
             },
             retries: Config.API_RETRY_ATTEMPTS,
-            timeout: Config.UI_NAVIGATION_TIMEOUT
         };
 
         const client = new PetStoreApiClient(config);

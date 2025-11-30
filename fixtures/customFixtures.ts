@@ -4,11 +4,11 @@ import { ProductPage } from "../page-objects/pages/ProductPage";
 import { Header } from "../page-objects/pages/Header";
 import { CartPage } from "../page-objects/pages/CartPage";
 
-import  AssertionsUI  from "../assertions/AssertionsUI";
-import  ApiAssertions  from "../assertions/ApiAssertions";
+import AssertionsUI from "../assertions/UI_Assertions";
+import ApiAssertions from "../assertions/API_Assertions";
 import { PetStoreApiClient } from "../api-client/PetStoreApiClient";
 import { IApiClientConfig } from "../interfaces/api/IApiClientConfig";
-import { Config } from "../src/config/Config";
+import { Config } from "../config/Config";
 
 import chalk from "chalk";
 
@@ -45,7 +45,7 @@ const test = base.extend<CustomFixtures>({
   },
 
   assertionsApi: async ({ request }, use) => {
-    await use( new ApiAssertions(request));
+    await use(new ApiAssertions(request));
   },
 
   petApi: async ({ request }, use) => {
@@ -60,17 +60,10 @@ const test = base.extend<CustomFixtures>({
       retries: Config.API_RETRY_ATTEMPTS,
       timeout: Config.UI_NAVIGATION_TIMEOUT
     };
-    
+
     const client = new PetStoreApiClient(config);
     await use(client);
   }
-});
-
-test.beforeAll(async () => {
-  console.log(chalk.blue('\n' + '='.repeat(50)));
-    console.log(chalk.blue('TEST EXECUTION STARTED - Configuration Summary'));
-    console.log(chalk.blue('='.repeat(50)));
-    Config.printConfig();
 });
 
 export { test };

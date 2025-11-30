@@ -24,7 +24,7 @@ test.describe('Retrieve and Delete Pet by ID', () => {
     await assertionsApi.responseIsOk(response);
   });
 
-  test('should successfully delete a pet by its ID', async ({ petApi, assertionsApi }) => {
+  test('should successfully delete a pet by its ID', async ({ petApi }) => {
     const petId = 1;
     
     const response = await petApi.deletePet(petId);

@@ -3,12 +3,6 @@ import { BaseApiClient } from './BaseApiClient';
 import { IPet } from '../interfaces/api';
 import { Routes } from '../endpoints';
 
-export interface IPetApiResponse<T = any> {
-    data: T;
-    status: number;
-    ok: boolean;
-}
-
 export class PetStoreApiClient extends BaseApiClient {
     /**
      * Create a new pet
@@ -66,7 +60,7 @@ export class PetStoreApiClient extends BaseApiClient {
     async uploadPetImage(petId: number, imagePath: string): Promise<APIResponse> {
         const formData = new FormData();
         formData.append('file', await this.readFileAsBlob(imagePath));
-        
+
         return this.post(
             Routes.PET_UPLOAD_IMAGE.replace('{petId}', petId.toString()),
             formData,
@@ -90,6 +84,7 @@ export class PetStoreApiClient extends BaseApiClient {
     }
 
     private async readFileAsBlob(filePath: string): Promise<Blob> {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const fs = require('fs').promises;
         const buffer = await fs.readFile(filePath);
         return new Blob([buffer]);
@@ -195,7 +190,7 @@ export class PetStoreApiClient extends BaseApiClient {
      * @param user New user data
      * @returns APIResponse
      */
-    async updateUserByUsername(username: string, user: any): Promise<APIResponse> {
+    async updateUserByUsername(username: string, user: Record<string, unknown>): Promise<APIResponse> {
         return this.put(`/user/${username}`, user);
     }
 
@@ -207,5 +202,5 @@ export class PetStoreApiClient extends BaseApiClient {
     async deleteUserByUsername(username: string): Promise<APIResponse> {
         return this.delete(`/user/${username}`);
     }
-    
+
 }
