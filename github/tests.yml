@@ -1,0 +1,7 @@
+on: [workflow_dispatch, push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm install
+      - run: npm test

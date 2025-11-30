@@ -10,11 +10,11 @@ export class Config {
     }
 
     static get RETRIES(): number {
-        return parseInt(process.env.PW_RETRIES || '2');
+        return parseInt(process.env.PW_RETRIES || '1');
     }
 
     static get API_RETRY_ATTEMPTS(): number {
-        return parseInt(process.env.API_RETRY_ATTEMPTS || '3');
+        return parseInt(process.env.API_RETRY_ATTEMPTS || '2');
     }
     static get API_REQUEST_TIMEOUT(): number {
         return TIMEOUTS.DEFAULT_TIMEOUT;

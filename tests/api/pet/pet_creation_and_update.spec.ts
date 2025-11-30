@@ -3,14 +3,14 @@ import { test as customTest } from '../../../fixtures/customFixtures';
 import { IPet } from '../../../interfaces/api';
 
 test.describe('Create and Update Pets', () => {
-  customTest('should successfully create a new pet with valid data', async ({ petApi, assertionsApi }) => {
+  customTest('should successfully create a new pet with valid data', async ({ petApiClient, assertionsApi }) => {
     const newPet: IPet = {
       id: Math.floor(Math.random() * 10000),
       name: 'Test Pet',
       status: 'available'
     };
 
-    const response = await petApi.createPet(newPet);
+    const response = await petApiClient.createPet(newPet);
     await assertionsApi.responseIsOk(response);
     
     const createdPet = await response.json();
@@ -18,14 +18,14 @@ test.describe('Create and Update Pets', () => {
     expect(createdPet.name).toBe(newPet.name);
   });
 
-  customTest('should successfully update an existing pet with new data', async ({ petApi, assertionsApi }) => {
+  customTest('should successfully update an existing pet with new data', async ({ petApiClient, assertionsApi }) => {
     const updatedPet: IPet = {
       id: 1,
       name: 'Updated Pet Name',
       status: 'pending'
     };
 
-    const response = await petApi.updatePet(updatedPet);
+    const response = await petApiClient.updatePet(updatedPet);
     await assertionsApi.responseIsOk(response);
     
     const result = await response.json();
