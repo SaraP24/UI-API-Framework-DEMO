@@ -2,11 +2,13 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "CommonJS",
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strict": true,
     "outDir": "dist",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "paths": {
     "@api-client": [
