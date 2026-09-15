@@ -135,7 +135,13 @@ export class BaseApiClient {
     }
 
     async saveJson<T>(filePath: string, data: T): Promise<void> {
+        // Ensure directory exists before writing
+        const dir = filePath.includes('/') ? filePath.substring(0, filePath.lastIndexOf('/')) : '';
+        if (dir) {
+            await fs.mkdir(dir, { recursive: true });
+        }
         await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+        return true as unknown as void;
     }
 
     async loadJson<T>(filePath: string): Promise<T> {

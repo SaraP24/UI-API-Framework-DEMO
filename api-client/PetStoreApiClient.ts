@@ -58,18 +58,24 @@ export class PetStoreApiClient extends BaseApiClient {
      * @returns APIResponse
      */
     async uploadPetImage(petId: number, imagePath: string): Promise<APIResponse> {
-        const formData = new FormData();
-        formData.append('file', await this.readFileAsBlob(imagePath));
+        // Use Playwright APIRequestContext multipart upload with a file stream
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const fs = require('fs');
+        const endpoint = Routes.PET_UPLOAD_IMAGE.replace('{petId}', petId.toString());
+        const url = this.buildUrl(endpoint);
 
-        return this.post(
-            Routes.PET_UPLOAD_IMAGE.replace('{petId}', petId.toString()),
-            formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+        const response = await this.requestContext.post(url, {
+            multipart: {
+                file: fs.createReadStream(imagePath)
             }
-        );
+        });
+
+        if (!response.ok()) {
+            const body = await response.text();
+            throw new Error(`Upload failed: ${response.status()} ${body}`);
+        }
+
+        return response;
     }
 
     /**
@@ -92,13 +98,11 @@ export class PetStoreApiClient extends BaseApiClient {
 
     async createOrderForPet(petId: number): Promise<APIResponse> {
         return this.post('/store/order', {
-            data: {
-                petId: petId,
-                quantity: 1,
-                shipDate: new Date().toISOString(),
-                status: 'placed',
-                complete: true
-            }
+            petId: petId,
+            quantity: 1,
+            shipDate: new Date().toISOString(),
+            status: 'placed',
+            complete: true
         });
     }
 }

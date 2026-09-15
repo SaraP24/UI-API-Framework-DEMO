@@ -2,7 +2,7 @@ import { test } from '../../fixtures/customFixtures';
 import loginTestData from '../../test_data/loginTestData';
 
 test.describe('DemoBlaze Tests - Login tests', () => {
-    test.beforeEach(async ({ homePage, headerPage }) => {
+    test.beforeEach(async ({ homePage, headerPage }: { homePage: any; headerPage: any }) => {
         await homePage.navigateToHomePage('/');
         await homePage.waitForElementToBeVisible(headerPage.navbar);
 

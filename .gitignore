@@ -6,3 +6,7 @@ node_modules/
 /availablePetsRetrieved.json
 /placedOrders.json
 .env
+.agents
+/reports
+.claude
+skills-lock.json

@@ -1,14 +1,17 @@
 /**
  * Custom exception for API client errors
  * Captures full context: method, endpoint, status, request/response data
+ * Now parametrizable por tipos de request/response para mejor trazabilidad de tipos.
  */
-export class ApiException extends Error {
+import { APIResponse } from '../types/api';
+
+export class ApiException<TRequest = unknown, TResponse = unknown> extends Error {
   constructor(
     public readonly method: string,
     public readonly endpoint: string,
     public readonly statusCode: number,
-    public readonly requestData?: any,
-    public readonly responseData?: any,
+    public readonly requestData?: TRequest,
+    public readonly responseData?: APIResponse<TResponse> | TResponse,
     message?: string
   ) {
     super(
@@ -23,13 +26,15 @@ export class ApiException extends Error {
    * Format exception details for logging
    */
   toString(): string {
+    const req = this.requestData ? JSON.stringify(this.requestData, null, 2) : 'N/A';
+    const res = this.responseData ? JSON.stringify(this.responseData, null, 2) : 'N/A';
     return `
 [${this.name}]
   Method: ${this.method.toUpperCase()}
   Endpoint: ${this.endpoint}
   Status: ${this.statusCode}
-  Request: ${this.requestData ? JSON.stringify(this.requestData, null, 2) : 'N/A'}
-  Response: ${this.responseData ? JSON.stringify(this.responseData, null, 2) : 'N/A'}
+  Request: ${req}
+  Response: ${res}
   Message: ${this.message}
     `.trim();
   }

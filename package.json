@@ -42,6 +42,7 @@
     "typescript-eslint": "^8.44.1"
   },
   "dependencies": {
+    "@playwright/cli": "^0.1.18",
     "chalk": "^5.6.2",
     "node-fetch": "^3.3.2",
     "tsconfig-paths": "^4.2.0"
